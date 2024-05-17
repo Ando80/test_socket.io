@@ -1,9 +1,12 @@
 const io = require("socket.io")(3000, {
   cors: {
-    origin: true, // true means to use any frontend.
+    origin: true,
   },
 });
 
 io.on("connection", (socket) => {
-  socket.emit("chat-message", "bonjour le monde");
+  console.log("new user");
+  socket.on("send-chat-message", (message) => {
+    socket.broadcast.emit("chat-message", message);
+  });
 });
